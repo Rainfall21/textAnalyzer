@@ -66,7 +66,7 @@ namespace TextAnalyzer
                             return;
                         }
 
-                        var content = getText.downloadContent(id);
+                        var content = getText.downloadContent<TextStrings>(id);
 
                         contentList.Add(content);
                     }
@@ -83,9 +83,14 @@ namespace TextAnalyzer
 
             int i = 1;
 
-            foreach (var obj in contentList)
+            foreach (var textStrings in contentList)
             {
-                RowCreator(obj, i, dynamicGrid);
+
+                textStrings.vowelCount = verificator.vowelsCount(textStrings.Text);
+
+                textStrings.wordCount = verificator.wordsCount(textStrings.Text);
+
+                RowCreator(textStrings, i, dynamicGrid);
 
                 i++;
             }
@@ -191,7 +196,7 @@ namespace TextAnalyzer
         /// It also inputs calculated data of vowels and words
         /// </summary>
 
-        public void RowCreator(TextStrings obj, int i, Grid dynamicGrid)
+        public void RowCreator(TextStrings textStrings, int i, Grid dynamicGrid)
         {
             RowDefinition dynamicRow = new RowDefinition();
 
@@ -207,13 +212,11 @@ namespace TextAnalyzer
 
             textBlock.TextWrapping = TextWrapping.Wrap;
 
-            textBlock.Text = obj.Text + "\n";
+            textBlock.Text = textStrings.Text + "\n";
 
-            string textForCount = obj.Text;
+            wordText.Text = textStrings.wordCount;
 
-            wordText.Text = verificator.wordsCount(textForCount);
-
-            vowelText.Text = verificator.vowelsCount(textForCount);
+            vowelText.Text = textStrings.vowelCount;
 
             Grid.SetRow(textBlock, i);
 

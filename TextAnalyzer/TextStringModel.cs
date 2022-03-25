@@ -9,6 +9,10 @@ namespace TextAnalyzer
     public partial class TextStrings
     {
         public string Text { get; set; }
+
+        public string vowelCount { get; set; }
+
+        public string wordCount { get; set; }
     }
 }
 

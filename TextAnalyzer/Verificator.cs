@@ -26,11 +26,11 @@ namespace TextAnalyzer
         //This method calculates amount of words in a string by splitting string by delimiters into array
         //and counting length of an array
         //
-        public string wordsCount(string textForCount)
+        public string wordsCount(string text)
         {
             char[] delimiters = new char[] { ' ', '\r', '\n', '\t', '\'', '\\', '—' };
 
-            string wordsQuantity = textForCount.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length.ToString();
+            string wordsQuantity = text.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length.ToString();
 
             return wordsQuantity;
         }
@@ -39,9 +39,9 @@ namespace TextAnalyzer
         // GetEncoding ISO-8859-8 is used for the majority of european languages.
         // GetEncoding UTF-8 is used for the minority of european languages.
 
-        public string vowelsCount(string textForCount)
+        public string vowelsCount(string text)
         {
-            string lowerText = textForCount.ToLower();
+            string lowerText = text.ToLower();
 
             byte[] tempBytes;
 

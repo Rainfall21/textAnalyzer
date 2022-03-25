@@ -19,7 +19,7 @@ namespace TextAnalyzer
         public static string key = "TMG-Api-Key";
 
         public static string value = "0J/RgNC40LLQtdGC0LjQutC4IQ==";
-        public TextStrings downloadContent(string id)
+        public T downloadContent<T>(string id)
         {
             id = id.Replace(",", "");
                 
@@ -47,7 +47,7 @@ namespace TextAnalyzer
 
             string json = streamReader.ReadToEnd();
 
-            var content = JsonConvert.DeserializeObject<TextStrings>(json);
+            var content = JsonConvert.DeserializeObject<T>(json);
 
             responseStream.Close();
 
