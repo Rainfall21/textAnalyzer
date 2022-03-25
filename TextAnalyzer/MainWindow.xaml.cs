@@ -12,6 +12,7 @@ namespace TextAnalyzer
         GetText getText = new GetText();
 
         Verificator verificator = new Verificator();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,7 +50,7 @@ namespace TextAnalyzer
 
             string[] validId = verificator.getValidated(identificators);
 
-            List<TextStrings> contentList = new List<TextStrings>();
+            List<TextStringModel> contentList = new List<TextStringModel>();
 
             try
             {
@@ -66,7 +67,7 @@ namespace TextAnalyzer
                             return;
                         }
 
-                        var content = getText.downloadContent<TextStrings>(id);
+                        var content = getText.downloadContent<TextStringModel>(id);
 
                         contentList.Add(content);
                     }
@@ -81,18 +82,13 @@ namespace TextAnalyzer
 
             Grid dynamicGrid = GridCreator();
 
-            int i = 1;
-
-            foreach (var textStrings in contentList)
+            for (int i = 1; i <= contentList.Count; i++)
             {
+                var textStringModel = contentList[i-1];
 
-                textStrings.vowelCount = verificator.vowelsCount(textStrings.Text);
+                var textViewModel = new TextStringViewModel(textStringModel, verificator); 
 
-                textStrings.wordCount = verificator.wordsCount(textStrings.Text);
-
-                RowCreator(textStrings, i, dynamicGrid);
-
-                i++;
+                RowCreator(textViewModel, i, dynamicGrid);
             }
         }
 
@@ -196,7 +192,7 @@ namespace TextAnalyzer
         /// It also inputs calculated data of vowels and words
         /// </summary>
 
-        public void RowCreator(TextStrings textStrings, int i, Grid dynamicGrid)
+        public void RowCreator(TextStringViewModel textStringViewModel, int i, Grid dynamicGrid)
         {
             RowDefinition dynamicRow = new RowDefinition();
 
@@ -212,11 +208,11 @@ namespace TextAnalyzer
 
             textBlock.TextWrapping = TextWrapping.Wrap;
 
-            textBlock.Text = textStrings.Text + "\n";
+            textBlock.Text = textStringViewModel.Text + "\n";
 
-            wordText.Text = textStrings.wordCount;
+            wordText.Text = textStringViewModel.wordCount;
 
-            vowelText.Text = textStrings.vowelCount;
+            vowelText.Text = textStringViewModel.vowelCount;
 
             Grid.SetRow(textBlock, i);
 
